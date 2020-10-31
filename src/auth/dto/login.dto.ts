@@ -5,17 +5,12 @@ export class LoginDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  client_id: string;
+  username: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  client_secret: string;
-}
-
-export class LoginErrorDto {
-  @ApiProperty()
-  message: string;
+  password: string;
 }
 
 export class LoginSuccessDto {
@@ -24,4 +19,7 @@ export class LoginSuccessDto {
 
   @ApiProperty()
   type: string;
+
+  @ApiProperty()
+  expires_in: number;
 }

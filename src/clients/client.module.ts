@@ -1,9 +1,15 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ClientsController } from './clients.controller';
 import { ClientsService } from './clients.service';
 
 @Module({
-  imports: [],
+  imports: [
+    HttpModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({ baseURL: configService.get('application.apiUrl') }),
+    }),
+  ],
   controllers: [ClientsController],
   providers: [ClientsService],
 })
