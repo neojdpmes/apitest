@@ -1,12 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
+import { ApiBody, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { LoginDto, LoginErrorDto, LoginSuccessDto } from './dto/login.dto';
 
-@Controller()
+@ApiTags('auth')
+@Controller('auth')
 export class AuthController {
   constructor(private readonly service: AuthService) {}
 
-  @Get()
-  getHello(): string {
-    return this.service.getHello();
+  @Post()
+  @ApiBody({ type: [LoginDto] })
+  @ApiOkResponse({ type: [LoginSuccessDto] })
+  @ApiUnauthorizedResponse({ type: [LoginErrorDto] })
+  login(@Body() body: LoginDto) {
+    return this.service.login(body);
   }
 }

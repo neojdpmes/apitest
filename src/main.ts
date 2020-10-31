@@ -1,4 +1,5 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -11,13 +12,14 @@ async function bootstrap() {
   // Swagger set
   const options = new DocumentBuilder()
     .setTitle('Base Api')
-    .setDescription('This is a test basic api')
+    .setDescription('This is a test basic api made by Neojdpm')
     .setVersion('1.0')
-    .addTag('cats')
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('/api/explorer', app, document);
 
-  await app.listen(3000);
+  const configService: ConfigService = app.get(ConfigService);
+  const port: number = configService.get('application.port');
+  await app.listen(port);
 }
 bootstrap();
