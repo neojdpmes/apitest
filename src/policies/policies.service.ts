@@ -1,14 +1,7 @@
-import { HttpService, Injectable } from '@nestjs/common';
-import { PolicyQuery } from './dto/policies.dto';
+import { Injectable } from '@nestjs/common';
+import { BaseBearerService } from 'src/utils/base-bearer.service';
 
 @Injectable()
-export class PoliciesService {
-  constructor(private readonly httpService: HttpService) {}
-
-  async getAll(query: PolicyQuery) {
-    return 'Hi';
-  }
-  async get(id: number) {
-    return 'Hi';
-  }
+export class PoliciesService extends BaseBearerService {
+  protected baseUrl = 'policies';
 }

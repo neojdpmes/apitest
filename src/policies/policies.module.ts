@@ -12,5 +12,6 @@ import { PoliciesService } from './policies.service';
   ],
   controllers: [PoliciesController],
   providers: [PoliciesService],
+  exports: [PoliciesService],
 })
 export class PoliciesModule {}

@@ -1,5 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import { IsOptional, IsNumber } from 'class-validator';
 
 export class PolicyDataDto {
   @ApiProperty()
@@ -19,7 +20,9 @@ export class PolicyDataDto {
 }
 
 export class PolicyQuery {
-  @ApiProperty()
+  @ApiPropertyOptional( {type: Number })
+  @IsOptional()
   @Type(() => Number)
+  @IsNumber()
   limit = 10;
 }

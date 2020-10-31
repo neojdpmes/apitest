@@ -1,11 +1,14 @@
 import { HttpModule, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
+    PassportModule,
     HttpModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({ baseURL: configService.get('application.apiUrl') }),
@@ -13,7 +16,7 @@ import { AuthService } from './auth.service';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get('jwt.jwtSecret'),
+        secret: configService.get('jwt.secret'),
         signOptions: {
           expiresIn: configService.get('jwt.expiration'),
         },
@@ -21,6 +24,6 @@ import { AuthService } from './auth.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}

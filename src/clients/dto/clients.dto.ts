@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { PolicyDataDto } from 'src/policies/dto/policies.dto';
 
 export class ClientDataDto {
@@ -20,10 +21,14 @@ export class ClientDataDto {
 }
 
 export class ClientQuery {
-  @ApiProperty()
+  @ApiPropertyOptional( {type: Number })
+  @IsOptional()
   @Type(() => Number)
+  @IsNumber()
   limit = 10;
 
-  @ApiPropertyOptional()
-  name?: string;
+  @ApiPropertyOptional( {type: String })
+  @IsOptional()
+  @IsString()
+  name = '';
 }
