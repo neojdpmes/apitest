@@ -1,8 +1,7 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { INestApplication, Logger } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import { AppModule } from './app.module';
-import { assert } from 'console';
 
 describe('App E2E', () => {
   let app: INestApplication;
