@@ -12,7 +12,11 @@ export class AuthService {
 
   login(body: LoginDto) {
     if (this.validateUser(body)) {
-      return { token: this.jwtService.sign({ username: body.username } )};
+      return { 
+        token: this.jwtService.sign({ username: body.username }),
+        type: 'Bearer',
+        "expires_in": this.config.get('jwt.expiration')
+      };
     } else throw new UnauthorizedException({ message: 'Invalid credentials.' });
   }
 
