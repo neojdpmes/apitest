@@ -1,7 +1,7 @@
 import { HttpModule, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { PoliciesModule } from 'src/policies/policies.module';
-import { PoliciesService } from 'src/policies/policies.service';
+import { PoliciesService } from '../policies/policies.service';
+import { PoliciesModule } from '../policies/policies.module';
 import { ClientsController } from './clients.controller';
 import { ClientsService } from './clients.service';
 

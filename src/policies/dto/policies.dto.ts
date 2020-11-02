@@ -22,7 +22,7 @@ export class PolicyDataDto {
 export class PolicyQuery {
   @ApiPropertyOptional( {type: Number })
   @IsOptional()
-  @Type(() => Number)
+  @Type(() => Number )
   @IsNumber()
   limit = 10;
 }

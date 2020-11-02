@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/auth.guard';
-import { PolicyDataDto } from 'src/policies/dto/policies.dto';
+import { JwtAuthGuard } from '../auth/auth.guard';
+import { PolicyDataDto } from '../policies/dto/policies.dto';
 import { ClientsService } from './clients.service';
 import { ClientDataDto, ClientQuery } from './dto/clients.dto';
 

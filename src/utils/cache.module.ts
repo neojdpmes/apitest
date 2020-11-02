@@ -3,7 +3,7 @@ import { CacheModule, Global, Module } from '@nestjs/common';
 @Global()
 @Module({
   imports: [
-    CacheModule.register({ ttl: 3600 }),
+    CacheModule.register(),
   ],
   exports: [CacheModule]
 })

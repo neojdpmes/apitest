@@ -19,7 +19,6 @@ module.exports = {
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/interface-name-prefix': 1,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/member-ordering': 1,
     '@typescript-eslint/require-await': 1,
