@@ -17,6 +17,9 @@ export class PolicyDataDto {
 
   @ApiProperty()
   installmentPayment: boolean;
+
+  @ApiProperty()
+  clientId: string;
 }
 
 export class PolicyQuery {

@@ -1,21 +1,20 @@
 import { CACHE_MANAGER, HttpService, Inject, Injectable } from '@nestjs/common';
-import { REQUEST } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
 import { Cache } from 'cache-manager';
-import { Request } from 'express';
 import { PoliciesService } from '../policies/policies.service';
 import { BaseBearerService } from '../utils';
+import { ClientDataDto } from './dto/clients.dto';
 
 @Injectable()
-export class ClientsService extends BaseBearerService {
-  protected baseUrl = 'clients';
+export class ClientsService extends BaseBearerService<ClientDataDto> {
 
   constructor(
     @Inject(PoliciesService) protected readonly policiesService: PoliciesService,
     @Inject(CACHE_MANAGER) protected readonly cacheManager: Cache,
-    @Inject(REQUEST) protected request: Request,
     @Inject(HttpService) protected readonly httpService: HttpService,
+    @Inject(ConfigService) protected readonly configService: ConfigService,
   ) {
-    super(httpService, cacheManager, request);
+    super(configService, httpService, cacheManager, 'clients');
   }
 
   public async getPolicies(id: string) {

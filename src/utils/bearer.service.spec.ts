@@ -1,12 +1,25 @@
-import { HttpService, InternalServerErrorException } from '@nestjs/common';
+import { CACHE_MANAGER, HttpService, Inject, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { REQUEST } from '@nestjs/core';
 import { Test } from '@nestjs/testing';
+import { Cache } from 'cache-manager';
 import { BaseCacheModule } from '.';
+import { ClientDataDto } from '../clients/dto/clients.dto';
+import { PolicyDataDto } from '../policies/dto/policies.dto';
 import { BaseBearerService } from './base-bearer.service';
 
+
+class BaseBearerTestingService extends BaseBearerService<ClientDataDto | PolicyDataDto> {
+  constructor(
+    @Inject(CACHE_MANAGER) protected readonly cacheManager: Cache,
+    @Inject(HttpService) protected readonly httpService: HttpService,
+    @Inject(ConfigService) protected readonly configService: ConfigService,
+  )  {
+    super(configService, httpService, cacheManager, 'test');
+  }
+}
+
 describe('Clients Testings', () => {
-  let service: BaseBearerService;
+  let service: BaseBearerTestingService;
   let httpService: HttpService;
   const CLIENTS_MOCK_DATA = [{ id: '1' }, { id: '2' }, { id: '3' }];
 
@@ -14,7 +27,7 @@ describe('Clients Testings', () => {
     const moduleRef = await Test.createTestingModule({
       imports: [BaseCacheModule],
       providers: [
-        BaseBearerService,
+        BaseBearerTestingService,
         {
           provide: ConfigService,
           useValue: {
@@ -22,24 +35,19 @@ describe('Clients Testings', () => {
           },
         },
         {
-          provide: REQUEST,
-          useValue: {
-            user: {
-              token: '',
-            },
-          },
-        },
-        {
           provide: HttpService,
           useValue: {
             get: jest.fn(),
+            post: jest.fn(),
           },
         },
       ],
     }).compile();
 
-    service = await moduleRef.resolve(BaseBearerService);
+    service = await moduleRef.resolve(BaseBearerTestingService);
     httpService = moduleRef.get(HttpService);
+
+    jest.spyOn(service, 'httpOptions').mockResolvedValue({} as any);
   });
 
   it('Get clients on error', async done => {
